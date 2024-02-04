@@ -1,4 +1,5 @@
 class Review {
+  final String id; // New field for review ID
   final String userName;
   final String userProfilePhoto;
   final String reviewText;
@@ -8,6 +9,7 @@ class Review {
   final bool hasPhotos; // New field for indicating if the review has photos
 
   Review({
+    required this.id,
     required this.userName,
     required this.userProfilePhoto,
     required this.reviewText,
@@ -18,6 +20,7 @@ class Review {
 
   factory Review.fromMap(Map<String, dynamic> map) {
     return Review(
+      id: map['id'],
       userName: map['userName'],
       userProfilePhoto: map['userProfilePhoto'],
       reviewText: map['reviewText'],
@@ -29,6 +32,7 @@ class Review {
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'userName': userName,
       'userProfilePhoto': userProfilePhoto,
       'reviewText': reviewText,

@@ -3,21 +3,28 @@ import 'package:zenify_admin_panel/models/review_model.dart';
 enum ProductState { newProduct, saleProduct, nullProduct, outOfStock }
 
 class Product {
-  String productImage = '';
+  String productId = ''; // New field for product ID
+  List<String> productImages = [];
+  List<String> tags = [];
+  String category = '';
+  List<String> subCategories = [];
   String title = '';
   String subTitle = '';
   double originalPrice = 0;
   double salePrice = 0;
   bool favoriteOrNot = false;
-  ProductState productStatus =
-      ProductState.nullProduct; // Change type to ProductState
+  ProductState productStatus = ProductState.nullProduct;
   double initRating = 0;
   String companyName = '';
   String description = '';
   List<Review> reviews;
 
   Product({
-    required this.productImage,
+    required this.productId,
+    required this.productImages,
+    required this.tags,
+    required this.category,
+    required this.subCategories,
     required this.title,
     required this.subTitle,
     required this.originalPrice,
@@ -32,7 +39,11 @@ class Product {
 
   factory Product.fromMap(Map<String, dynamic> map) {
     return Product(
-      productImage: map['productImage'],
+      productId: map['productId'],
+      productImages: List<String>.from(map['productImages']),
+      tags: List<String>.from(map['tags']),
+      category: map['category'],
+      subCategories: List<String>.from(map['subCategories']),
       title: map['title'],
       subTitle: map['subTitle'],
       originalPrice: map['originalPrice'],
@@ -50,7 +61,11 @@ class Product {
 
   Map<String, dynamic> toMap() {
     return {
-      'productImage': productImage,
+      'productId': productId,
+      'productImages': productImages,
+      'tags': tags,
+      'category': category,
+      'subCategories': subCategories,
       'title': title,
       'subTitle': subTitle,
       'originalPrice': originalPrice,
@@ -64,12 +79,10 @@ class Product {
     };
   }
 
-  // Helper method to convert ProductState to a string
   static String _serializeProductState(ProductState state) {
     return state.toString().split('.').last;
   }
 
-  // Helper method to parse a string into ProductState
   static ProductState _parseProductState(String? stateString) {
     if (stateString == 'newProduct') {
       return ProductState.newProduct;
