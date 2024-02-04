@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zenify_admin_panel/main.dart';
 import 'package:zenify_admin_panel/view/dashboard/components/navigation_rail_providers.dart';
 
 class CustomNavigationRail extends StatefulWidget {
@@ -16,11 +17,16 @@ class _CustomNavigationRailState extends State<CustomNavigationRail> {
     return Row(
       children: [
         NavigationRail(
+          useIndicator: true,
+          extended: true,
           destinations: const [
             NavigationRailDestination(
-              icon: Icon(Icons.add),
-              label: Text('Add A Product'),
-            ),
+                icon: Icon(Icons.add),
+                label: Text('Add A Product'),
+                selectedIcon: Icon(
+                  Icons.add_outlined,
+                  color: MyAppColors.primaryred,
+                )),
             NavigationRailDestination(
               icon: Icon(Icons.edit),
               label: Text('Edit Products'),
@@ -38,8 +44,34 @@ class _CustomNavigationRailState extends State<CustomNavigationRail> {
           onDestinationSelected: (index) {
             navRailProv.selectindex(index);
           },
-          labelType: NavigationRailLabelType.all,
+          // labelType: NavigationRailLabelType.all,
         ),
+        Expanded(
+          child: Column(
+            children: [
+              if (navRailProv.selectedIndex == 0)
+                Text(
+                  'Add a Product',
+                  style: TextStyle(fontSize: 55),
+                )
+              else if (navRailProv.selectedIndex == 1)
+                Text(
+                  'Edit Products',
+                  style: TextStyle(fontSize: 55),
+                )
+              else if (navRailProv.selectedIndex == 2)
+                Text(
+                  'View all Product',
+                  style: TextStyle(fontSize: 55),
+                )
+              else if (navRailProv.selectedIndex == 3)
+                Text(
+                  'Sale and Profits',
+                  style: TextStyle(fontSize: 55),
+                ),
+            ],
+          ),
+        )
       ],
     );
   }

@@ -26,8 +26,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
           theme: ThemeData(
             navigationRailTheme: NavigationRailThemeData(
-              backgroundColor: MyAppColors.darkBlue,
-            ),
+                backgroundColor: MyAppColors.darkBlue,
+                selectedIconTheme:
+                    IconThemeData(color: MyAppColors.primaryred)),
             drawerTheme: const DrawerThemeData(
               backgroundColor: MyAppColors.primaryred,
             ),
