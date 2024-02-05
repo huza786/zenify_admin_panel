@@ -48,27 +48,29 @@ class _CustomNavigationRailState extends State<CustomNavigationRail> {
           // labelType: NavigationRailLabelType.all,
         ),
         Expanded(
-          child: Column(
-            children: [
-              if (navRailProv.selectedIndex == 0)
-                //Add a product Screen
-                AddProduct()
-              else if (navRailProv.selectedIndex == 1)
-                Text(
-                  'Edit Products',
-                  style: TextStyle(fontSize: 55),
-                )
-              else if (navRailProv.selectedIndex == 2)
-                Text(
-                  'View all Product',
-                  style: TextStyle(fontSize: 55),
-                )
-              else if (navRailProv.selectedIndex == 3)
-                Text(
-                  'Sale and Profits',
-                  style: TextStyle(fontSize: 55),
-                ),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                if (navRailProv.selectedIndex == 0)
+                  //Add a product Screen
+                  AddProduct()
+                else if (navRailProv.selectedIndex == 1)
+                  Text(
+                    'Edit Products',
+                    style: TextStyle(fontSize: 55),
+                  )
+                else if (navRailProv.selectedIndex == 2)
+                  Text(
+                    'View all Product',
+                    style: TextStyle(fontSize: 55),
+                  )
+                else if (navRailProv.selectedIndex == 3)
+                  Text(
+                    'Sale and Profits',
+                    style: TextStyle(fontSize: 55),
+                  ),
+              ],
+            ),
           ),
         )
       ],

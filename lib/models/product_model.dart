@@ -17,7 +17,6 @@ class Product {
   double initRating = 0;
   String companyName = '';
   String description = '';
-  List<Review> reviews;
 
   Product({
     required this.productId,
@@ -34,7 +33,6 @@ class Product {
     required this.initRating,
     required this.companyName,
     required this.description,
-    required this.reviews,
   });
 
   factory Product.fromMap(Map<String, dynamic> map) {
@@ -53,9 +51,6 @@ class Product {
       initRating: map['initRating'],
       companyName: map['companyName'],
       description: map['description'],
-      reviews: (map['reviews'] as List<dynamic>)
-          .map((reviewMap) => Review.fromMap(reviewMap))
-          .toList(),
     );
   }
 
@@ -75,7 +70,6 @@ class Product {
       'initRating': initRating,
       'companyName': companyName,
       'description': description,
-      'reviews': reviews.map((review) => review.toMap()).toList(),
     };
   }
 
@@ -95,3 +89,4 @@ class Product {
     }
   }
 }
+//

@@ -1,19 +1,29 @@
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker_web/image_picker_web.dart';
+import 'package:zenify_admin_panel/main.dart';
 
-class AddProduct extends StatelessWidget {
-  const AddProduct({super.key});
+class AddProduct extends StatefulWidget {
+  const AddProduct({Key? key}) : super(key: key);
+
+  @override
+  State<AddProduct> createState() => _AddProductState();
+}
+
+class _AddProductState extends State<AddProduct> {
+  Uint8List? fromPicker;
+  TextEditingController testController = TextEditingController();
+  final db = FirebaseFirestore.instance;
+  final city = <String, String>{
+    "name": "Los Angeles",
+    "state": "CA",
+    "country": "USA",
+  };
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController testController = TextEditingController();
-    final db = FirebaseFirestore.instance;
-    final city = <String, String>{
-      "name": "Los Angeles",
-      "state": "CA",
-      "country": "USA"
-    };
-
     return Column(
       children: [
         Padding(
@@ -26,16 +36,37 @@ class AddProduct extends StatelessWidget {
           ),
         ),
         ElevatedButton(
-            onPressed: () {
-              db
-                  .collection("cities")
-                  .add(city)
-                  .then((value) => print("Document added with ID: ${value.id}"))
-                  .catchError(
-                      (error) => print("Error adding document: $error"));
-              //TODO:add firebase post method
-            },
-            child: Text('Post'))
+          onPressed: () {
+            db
+                .collection("cities")
+                .add(city)
+                .then((value) => print("Document added with ID: ${value.id}"))
+                .catchError((error) => print("Error adding document: $error"));
+            // TODO: add firebase post method
+          },
+          child: Text('Post'),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SizedBox(
+            width: 550,
+            height: 550,
+            child: Container(
+              color: MyAppColors.darkBlue,
+              child: fromPicker != null
+                  ? Image.memory(fromPicker!)
+                  : Center(child: Text("No image selected")),
+            ),
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () async {
+            fromPicker = await ImagePickerWeb.getImageAsBytes();
+            print(fromPicker);
+            setState(() {});
+          },
+          child: Text('Select image'),
+        )
       ],
     );
   }
