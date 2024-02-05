@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zenify_admin_panel/main.dart';
-import 'package:zenify_admin_panel/view/dashboard/components/navigation_rail_providers.dart';
+import 'package:zenify_admin_panel/view/dashboard/admin_vendor/add_product.dart';
+import 'package:zenify_admin_panel/view/dashboard/admin_vendor/components/navigation_rail_providers.dart';
 
 class CustomNavigationRail extends StatefulWidget {
   const CustomNavigationRail({super.key});
@@ -50,10 +51,8 @@ class _CustomNavigationRailState extends State<CustomNavigationRail> {
           child: Column(
             children: [
               if (navRailProv.selectedIndex == 0)
-                Text(
-                  'Add a Product',
-                  style: TextStyle(fontSize: 55),
-                )
+                //Add a product Screen
+                AddProduct()
               else if (navRailProv.selectedIndex == 1)
                 Text(
                   'Edit Products',

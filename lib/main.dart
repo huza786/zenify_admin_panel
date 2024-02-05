@@ -2,8 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zenify_admin_panel/firebase_options.dart';
-import 'package:zenify_admin_panel/view/dashboard/admin_screen.dart';
-import 'package:zenify_admin_panel/view/dashboard/components/navigation_rail_providers.dart';
+import 'package:zenify_admin_panel/view/dashboard/admin_vendor/admin_screen.dart';
+import 'package:zenify_admin_panel/view/dashboard/admin_vendor/components/navigation_rail_providers.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

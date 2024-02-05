@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zenify_admin_panel/view/dashboard/components/navigation_rail.dart';
+import 'package:zenify_admin_panel/view/dashboard/admin_vendor/components/navigation_rail.dart';
 
 class AdminScreen extends StatefulWidget {
   const AdminScreen({super.key});
