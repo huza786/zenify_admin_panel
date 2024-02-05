@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker_web/image_picker_web.dart';
 import 'package:zenify_admin_panel/main.dart';
@@ -16,6 +17,7 @@ class _AddProductState extends State<AddProduct> {
   Uint8List? fromPicker;
   TextEditingController testController = TextEditingController();
   final db = FirebaseFirestore.instance;
+  final storageRef = FirebaseStorage.instance.ref();
   final city = <String, String>{
     "name": "Los Angeles",
     "state": "CA",
@@ -62,10 +64,25 @@ class _AddProductState extends State<AddProduct> {
         ElevatedButton(
           onPressed: () async {
             fromPicker = await ImagePickerWeb.getImageAsBytes();
-            print(fromPicker);
             setState(() {});
           },
           child: Text('Select image'),
+        ),
+        ElevatedButton(
+          onPressed: () async {
+            final imageRef = storageRef.child('images/');
+            try {
+              await imageRef.putData(
+                Uint8List.fromList(fromPicker!),
+                SettableMetadata(contentType: 'image/jpeg'),
+              );
+              final url = imageRef.getDownloadURL();
+              print(url.toString());
+            } catch (e) {
+              print(e);
+            }
+          },
+          child: Text('upload image'),
         )
       ],
     );

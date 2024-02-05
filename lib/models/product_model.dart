@@ -89,4 +89,6 @@ class Product {
     }
   }
 }
-//
+//instead of storing reviews list in the product model 
+//we will store reviews in databse doc 
+//when reviews will be added ie when it will be purchased and saved to database
