@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zenify_admin_panel/firebase_options.dart';
+import 'package:zenify_admin_panel/firebase_services/firebase_product_provider.dart';
 import 'package:zenify_admin_panel/view/dashboard/admin_vendor/admin_screen.dart';
 import 'package:zenify_admin_panel/view/dashboard/admin_vendor/components/navigation_rail_providers.dart';
 
@@ -21,6 +22,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           //navigation rail provider
           create: (context) => NavigationRailProvider(),
+        ),
+        ChangeNotifierProvider(
+          //navigation rail provider
+          create: (context) => FirebaseProductProvider(),
         ),
       ],
       child: MaterialApp(

@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker_web/image_picker_web.dart';
+import 'package:provider/provider.dart';
+import 'package:zenify_admin_panel/firebase_services/firebase_product_provider.dart';
 import 'package:zenify_admin_panel/main.dart';
 
 class AddProduct extends StatefulWidget {
@@ -14,10 +16,10 @@ class AddProduct extends StatefulWidget {
 }
 
 class _AddProductState extends State<AddProduct> {
-  Uint8List? fromPicker;
+  List<Uint8List>? fromPicker;
   TextEditingController testController = TextEditingController();
   final db = FirebaseFirestore.instance;
-  final storageRef = FirebaseStorage.instance.ref();
+
   final city = <String, String>{
     "name": "Los Angeles",
     "state": "CA",
@@ -26,6 +28,7 @@ class _AddProductState extends State<AddProduct> {
 
   @override
   Widget build(BuildContext context) {
+    final firebaseProductProv = Provider.of<FirebaseProductProvider>(context);
     return Column(
       children: [
         Padding(
@@ -56,31 +59,37 @@ class _AddProductState extends State<AddProduct> {
             child: Container(
               color: MyAppColors.darkBlue,
               child: fromPicker != null
-                  ? Image.memory(fromPicker!)
+                  ? Wrap(
+                      children: fromPicker!
+                          .map((e) => SizedBox(
+                              height: 240, width: 240, child: Image.memory(e)))
+                          .toList(),
+                    )
                   : Center(child: Text("No image selected")),
             ),
           ),
         ),
         ElevatedButton(
           onPressed: () async {
-            fromPicker = await ImagePickerWeb.getImageAsBytes();
+            fromPicker = await ImagePickerWeb.getMultiImagesAsBytes();
             setState(() {});
           },
           child: Text('Select image'),
         ),
         ElevatedButton(
           onPressed: () async {
-            final imageRef = storageRef.child('images/');
-            try {
-              await imageRef.putData(
-                Uint8List.fromList(fromPicker!),
-                SettableMetadata(contentType: 'image/jpeg'),
-              );
-              final url = imageRef.getDownloadURL();
-              print(url.toString());
-            } catch (e) {
-              print(e);
-            }
+            firebaseProductProv.uploadListImages(fromPicker);
+            // final imageRef = storageRef.child('images/');
+            // try {
+            //   await imageRef.putData(
+            //     Uint8List.fromList(fromPicker!),
+            //     SettableMetadata(contentType: 'image/jpeg'),
+            //   );
+            //   final url = await imageRef.getDownloadURL();
+            //   print(url.toString());
+            // } catch (e) {
+            //   print(e);
+            // }
           },
           child: Text('upload image'),
         )
