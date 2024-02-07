@@ -26,93 +26,6 @@ class _AddProductState extends State<AddProduct> {
 
   final db = FirebaseFirestore.instance;
 
-  final categories = [
-    {
-      "category": "Women",
-      "subCategory": [
-        "Tops",
-        "Earrings",
-        "Rings",
-        "Dresses",
-        "Handbags",
-        "Shoes",
-        "Bracelets",
-        "Necklaces",
-        "Scarves"
-      ]
-    },
-    {
-      "category": "Men",
-      "subCategory": [
-        "Shirts",
-        "Watches",
-        "Belts",
-        "Sneakers",
-        "Jackets",
-        "Trousers",
-        "Caps",
-        "Ties",
-        "Wallets"
-      ]
-    },
-    {
-      "category": "Kids",
-      "subCategory": [
-        "T-shirts",
-        "Toys",
-        "Pants",
-        "Dresses",
-        "Sweaters",
-        "Backpacks",
-        "Hats",
-        "Socks",
-        "Sandals"
-      ]
-    },
-    {
-      "category": "Unisex",
-      "subCategory": [
-        "Sunglasses",
-        "Hoodies",
-        "Jeans",
-        "Backpacks",
-        "Scarves",
-        "Sneakers",
-        "Watches",
-        "T-shirts",
-        "Beanies"
-      ]
-    },
-    {
-      "category": "Boys",
-      "subCategory": [
-        "T-shirts",
-        "Shorts",
-        "Hoodies",
-        "Sneakers",
-        "Backpacks",
-        "Pajamas",
-        "Jeans",
-        "Caps",
-        "Jackets"
-      ]
-    },
-    {
-      "category": "Girls",
-      "subCategory": [
-        "Dresses",
-        "Leggings",
-        "Hair Accessories",
-        "Sandals",
-        "Purses",
-        "Skirts",
-        "Tops",
-        "Earrings",
-        "Necklaces"
-      ]
-    }
-  ];
-
   @override
   Widget build(BuildContext context) {
     final firebaseProductProv = Provider.of<FirebaseProductProvider>(context);
@@ -125,21 +38,48 @@ class _AddProductState extends State<AddProduct> {
         children: [
           //title
           CustomTextForm(hint: 'Title', controller: titleController),
-          ElevatedButton(
-            onPressed: () {
-              final catRef = db.collection('utils');
-
-              for (var i = 0; i < categories.length; i++) {
-                var categoryValue = categories[i]['category'];
-                if (categoryValue != null) {
-                  String categoryName = categoryValue as String;
-                  db.collection('utils').doc(categoryName).set(categories[i]);
-                }
-              }
-
-              // TODO: add firebase post method
-            },
-            child: Text('Post'),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              border: Border.all(
+                width: 1.0,
+                color:
+                    MyAppColors.primaryred, // Customize border color as needed
+              ),
+            ),
+            height: 40,
+            width: 138,
+            child: Center(
+              child: DropdownButtonFormField(
+                decoration: const InputDecoration(
+                  hintText:
+                      '', // Set empty hintText to hide default text in dropdown
+                  border: InputBorder.none, // Remove default border
+                  contentPadding: EdgeInsets.zero, // Adjust content padding
+                  isDense: true, // Reduce the height of the input field
+                  alignLabelWithHint:
+                      true, // Align the label with the hint text
+                ),
+                value: firebaseProductProv.selectedCategory,
+                items: firebaseProductProv.categoryList
+                    .map(
+                      (size) => DropdownMenuItem<String>(
+                        value: size,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 4, bottom: 4),
+                          child: Text(
+                            size,
+                            style: TextStyle(fontSize: 14),
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
+                onChanged: (size) {
+                  firebaseProductProv.selectCategoryItem(size.toString());
+                },
+              ),
+            ),
           ),
           //Subtitle
         ],
@@ -216,4 +156,13 @@ class _AddProductState extends State<AddProduct> {
       
 
 
+//Category Firebase addition code
+    // final catRef = db.collection('utils');
 
+    //           for (var i = 0; i < categories.length; i++) {
+    //             var categoryValue = categories[i]['category'];
+    //             if (categoryValue != null) {
+    //               String categoryName = categoryValue as String;
+    //               db.collection('utils').doc(categoryName).set(categories[i]);
+    //             }
+    //           }
