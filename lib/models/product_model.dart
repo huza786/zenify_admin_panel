@@ -14,7 +14,6 @@ class Product {
   double salePrice = 0;
   bool favoriteOrNot = false;
   ProductState productStatus = ProductState.nullProduct;
-  double initRating = 0;
   String companyName = '';
   String description = '';
 
@@ -28,9 +27,8 @@ class Product {
     required this.subTitle,
     required this.originalPrice,
     required this.salePrice,
-    required this.favoriteOrNot,
-    required this.productStatus,
-    required this.initRating,
+    this.favoriteOrNot = false,
+    this.productStatus = ProductState.newProduct,
     required this.companyName,
     required this.description,
   });
@@ -48,7 +46,6 @@ class Product {
       salePrice: map['salePrice'],
       favoriteOrNot: map['favoriteOrNot'],
       productStatus: _parseProductState(map['newOrNot']),
-      initRating: map['initRating'],
       companyName: map['companyName'],
       description: map['description'],
     );
@@ -67,7 +64,6 @@ class Product {
       'salePrice': salePrice,
       'favoriteOrNot': favoriteOrNot,
       'newOrNot': _serializeProductState(productStatus),
-      'initRating': initRating,
       'companyName': companyName,
       'description': description,
     };

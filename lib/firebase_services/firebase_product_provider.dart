@@ -30,10 +30,11 @@ class FirebaseProductProvider with ChangeNotifier {
   //   } catch (e) {}
   // }
   Future<void> uploadSingleImage(Uint8List? image) async {
+    var int2 = Random().nextInt(4294967295) + 3294967296;
     String url;
     try {
       final storageRef = FirebaseStorage.instance.ref().child(
-            'ProductImage/${DateTime.now().millisecondsSinceEpoch}.jpg',
+            'ProductImage/$int2.jpg',
           );
       if (image != null) {
         await storageRef.putData(
@@ -49,7 +50,6 @@ class FirebaseProductProvider with ChangeNotifier {
   }
 
   Future<void> uploadListImages(List<Uint8List>? imagesList) async {
-    Random rnd = Random();
     if (imagesList != null) {
       await Future.wait(imagesList.map((_image) => uploadSingleImage(_image)));
       print(downloadUrls.toString());
