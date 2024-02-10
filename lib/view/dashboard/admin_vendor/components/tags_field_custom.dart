@@ -21,9 +21,16 @@ class _TextFieldTagsCustomState extends State<TextFieldTagsCustom> {
     "Footwear",
   ];
 
+  TextEditingController textEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    TextEditingController textEditingController = TextEditingController();
+    print('Entered text: ${textEditingController.text}');
+    final filteredTags = tags
+        .where((tag) => tag
+            .toLowerCase()
+            .contains(textEditingController.text.toLowerCase()))
+        .toList();
+    print('Filtered tags: $filteredTags');
     return Container(
       width: 400,
       child: Column(
@@ -31,55 +38,45 @@ class _TextFieldTagsCustomState extends State<TextFieldTagsCustom> {
           Text('Add Tags'),
           TextFormField(
             controller: textEditingController,
+            onChanged: (_) => setState(() {}),
           ),
           Stack(
             children: [
-              Wrap(
-                children: tags
-                    .map(
-                      (tag) => Chip(
-                        deleteIconColor: MyAppColors.primaryred,
-                        deleteIcon: const Icon(
-                          Icons.close,
-                          color: MyAppColors.primaryred,
-                        ),
-                        label: Text(
-                          tag,
-                        ),
-                      ),
-                    )
-                    .toList(),
-              ),
+              // Wrap(
+              //   children: tags
+              //       .map(
+              //         (tag) => Chip(
+              //           deleteIconColor: MyAppColors.primaryred,
+              //           deleteIcon: const Icon(
+              //             Icons.close,
+              //             color: MyAppColors.primaryred,
+              //           ),
+              //           label: Text(
+              //             tag,
+              //           ),
+              //         ),
+              //       )
+              //       .toList(),
+              // ),
               textEditingController.text.isNotEmpty
-                  ? ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: tags
-                          .where((element) => textEditingController.text
-                              .toLowerCase()
-                              .contains(element.toLowerCase()))
-                          .length,
-                      itemBuilder: (context, index) {
-                        return Wrap(
-                          children: tags
-                              .where((element) => textEditingController.text
-                                  .toLowerCase()
-                                  .contains(element.toLowerCase()))
-                              .map(
-                                (tag) => Chip(
-                                  deleteIconColor: MyAppColors.primaryred,
-                                  deleteIcon: const Icon(
-                                    Icons.close,
-                                    color: MyAppColors.primaryred,
-                                  ),
-                                  label: Text(
-                                    tag,
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                        );
-                      })
-                  : SizedBox(),
+                  ? Wrap(
+                      children: filteredTags
+                          .map(
+                            (tag) => Chip(
+                              onDeleted: () {},
+                              deleteIconColor: MyAppColors.primaryred,
+                              deleteIcon: const Icon(
+                                Icons.close,
+                                color: MyAppColors.primaryred,
+                              ),
+                              label: Text(
+                                tag,
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    )
+                  : SizedBox.shrink(),
             ],
           ),
         ],
