@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 import 'package:zenify_admin_panel/firebase_services/firebase_product_provider.dart';
 import 'package:zenify_admin_panel/main.dart';
+import 'package:zenify_admin_panel/view/dashboard/admin_vendor/components/tags_field_custom.dart';
 import 'package:zenify_admin_panel/view/dashboard/admin_vendor/components/textform_custom.dart';
 
 class AddProduct extends StatefulWidget {
@@ -133,9 +134,9 @@ class _AddProductState extends State<AddProduct> {
               ),
             ),
           ),
-          //Subtitle
         ],
       ),
+      TextFieldTagsCustom(),
     ]);
   }
 }
