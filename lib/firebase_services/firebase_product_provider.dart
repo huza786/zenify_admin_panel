@@ -15,7 +15,6 @@ class FirebaseProductProvider with ChangeNotifier {
   List<String> downloadUrls = [];
   final List<String> _categoryList = [];
   List<String> get categoryList => _categoryList;
-  List<String> subCategoryList = [];
 
   //method to get category
   void getCategory() async {
@@ -38,13 +37,52 @@ class FirebaseProductProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  // Other properties and methods...
+
+  List<String> availibleSubCategory = [];
+  // Method to get subcategories for a category
+  Future<List<String>> getSubcategoriesForCategory(String categoryName) async {
+    try {
+      final categoryRef =
+          FirebaseFirestore.instance.collection('utils').doc(categoryName);
+
+      DocumentSnapshot<Map<String, dynamic>> categorySnapshot =
+          await categoryRef.get();
+
+      if (categorySnapshot.exists) {
+        List<dynamic> subCategories =
+            categorySnapshot.data()?['subCategory'] ?? [];
+        if (!availibleSubCategory.contains('Sub Category')) {
+          availibleSubCategory.insert(0, 'Sub Category');
+        }
+        availibleSubCategory.addAll(List<String>.from(subCategories));
+        notifyListeners();
+        print(availibleSubCategory);
+
+        return List<String>.from(subCategories);
+      } else {
+        // Handle case when category document doesn't exist
+        print('Category document does not exist');
+        return [];
+      }
+    } catch (error) {
+      print('Error fetching subcategories for $categoryName: $error');
+      return [];
+    }
+  }
+
+//it is the method that changes selected category in dropdown
   String selectedCategory = 'Category';
   void selectCategoryItem(String category) {
     selectedCategory = category;
     notifyListeners();
   }
 
-  List<String> selectedSubCategory = [];
+  String selectedSubCat = 'Sub Category';
+  void selectSubCategoryItem(String Subcategory) {
+    selectedSubCat = Subcategory;
+    notifyListeners();
+  }
   //TODO: make logic to save sub categories
   // void selectCategoryItem(String category) {
   //   selectedCategory = category;

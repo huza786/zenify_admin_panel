@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker_web/image_picker_web.dart';
 import 'package:provider/provider.dart';
+import 'package:textfield_tags/textfield_tags.dart';
 import 'package:zenify_admin_panel/firebase_services/firebase_product_provider.dart';
 import 'package:zenify_admin_panel/main.dart';
 import 'package:zenify_admin_panel/view/dashboard/admin_vendor/components/textform_custom.dart';
@@ -35,9 +36,12 @@ class _AddProductState extends State<AddProduct> {
         style: TextStyle(fontSize: 40, fontWeight: FontWeight.w600),
       ),
       Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           //title
           CustomTextForm(hint: 'Title', controller: titleController),
+          CustomTextForm(hint: 'Subtitle', controller: subtitleController),
+          //selected category dropdown
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5.0),
@@ -47,7 +51,7 @@ class _AddProductState extends State<AddProduct> {
                     MyAppColors.primaryred, // Customize border color as needed
               ),
             ),
-            height: 40,
+            height: 60,
             width: 138,
             child: Center(
               child: DropdownButtonFormField(
@@ -77,13 +81,61 @@ class _AddProductState extends State<AddProduct> {
                     .toList(),
                 onChanged: (size) {
                   firebaseProductProv.selectCategoryItem(size.toString());
+                  firebaseProductProv.getSubcategoriesForCategory(size!);
                 },
+              ),
+            ),
+          ),
+          //Selected Subcategory dropdown
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5.0),
+                border: Border.all(
+                  width: 1.0,
+                  color: MyAppColors
+                      .primaryred, // Customize border color as needed
+                ),
+              ),
+              height: 60,
+              width: 138,
+              child: Center(
+                child: DropdownButtonFormField(
+                  decoration: const InputDecoration(
+                    hintText:
+                        'Sub Category', // Set empty hintText to hide default text in dropdown
+                    border: InputBorder.none, // Remove default border
+                    contentPadding: EdgeInsets.zero, // Adjust content padding
+                    isDense: true, // Reduce the height of the input field
+                    alignLabelWithHint:
+                        true, // Align the label with the hint text
+                  ),
+                  value: firebaseProductProv.selectedSubCat,
+                  items: firebaseProductProv.availibleSubCategory
+                      .map(
+                        (size) => DropdownMenuItem<String>(
+                          value: size,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 4, bottom: 4),
+                            child: Text(
+                              size,
+                              style: TextStyle(fontSize: 14),
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (size) {
+                    firebaseProductProv.selectSubCategoryItem(size.toString());
+                  },
+                ),
               ),
             ),
           ),
           //Subtitle
         ],
-      )
+      ),
     ]);
   }
 }
