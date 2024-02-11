@@ -136,4 +136,46 @@ class FirebaseProductProvider with ChangeNotifier {
       print(downloadUrls.toString());
     }
   }
+
+  //tags customselect
+  TextEditingController textEditingController = TextEditingController();
+
+  List<String> returnSuggestions() {
+    return tags
+        .where((tag) => tag
+            .toLowerCase()
+            .contains(textEditingController.text.toLowerCase()))
+        .toList();
+  }
+
+  List<String> tags = [
+    "Tops",
+    "Dresses",
+    "Bottoms",
+    "Outerwear",
+    "Activewear",
+    "Underwear",
+    "Sleepwear",
+    "Accessories",
+    "Footwear",
+  ];
+  List selectedTags = [];
+  addSelectedtag(String tag) {
+    selectedTags.add(tag);
+    notifyListeners();
+  }
+
+  removeSelectedtag(String tag) {
+    selectedTags.remove(tag);
+    notifyListeners();
+  }
+
+  clearSearchBar() {
+    textEditingController.clear();
+    notifyListeners();
+  }
+
+  changed() {
+    notifyListeners();
+  }
 }
