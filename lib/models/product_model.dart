@@ -1,5 +1,3 @@
-import 'package:zenify_admin_panel/models/review_model.dart';
-
 enum ProductState { newProduct, saleProduct, nullProduct, outOfStock }
 
 class Product {

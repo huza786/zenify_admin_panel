@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zenify_admin_panel/main.dart';
 
 class CustomTextForm extends StatelessWidget {
   final String hint;
@@ -8,14 +9,22 @@ class CustomTextForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width / 5,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5.0),
+          border: Border.all(
+            width: 1.0,
+            color: MyAppColors.primaryred, // Customize border color as needed
+          ),
+        ),
+        width: MediaQuery.of(context).size.width / 5,
         child: TextFormField(
+          style: TextStyle(),
           controller: controller,
           decoration: InputDecoration(
-            border: OutlineInputBorder(),
+            border: OutlineInputBorder(borderSide: BorderSide.none),
             hintText: hint,
           ),
         ),

@@ -137,6 +137,16 @@ class FirebaseProductProvider with ChangeNotifier {
     }
   }
 
+//hovering on image will show select image
+  bool _onHover = false;
+
+  bool get onHover => _onHover;
+
+  set onHover(bool value) {
+    _onHover = value;
+    notifyListeners();
+  }
+
   //tags customselect
   TextEditingController textEditingController = TextEditingController();
 
@@ -178,4 +188,10 @@ class FirebaseProductProvider with ChangeNotifier {
   changed() {
     notifyListeners();
   }
+
+  TextEditingController titleController = TextEditingController();
+  TextEditingController subtitleController = TextEditingController();
+  TextEditingController originalPriceController = TextEditingController();
+  TextEditingController companyNameController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
 }
