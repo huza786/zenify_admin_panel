@@ -5,7 +5,7 @@ class Product {
   List<String> productImages = [];
   List<String> tags = [];
   String category = '';
-  List<String> subCategories = [];
+  String subCategories = '';
   String title = '';
   String subTitle = '';
   double originalPrice = 0;
@@ -37,7 +37,7 @@ class Product {
       productImages: List<String>.from(map['productImages']),
       tags: List<String>.from(map['tags']),
       category: map['category'],
-      subCategories: List<String>.from(map['subCategories']),
+      subCategories: map['subCategories'],
       title: map['title'],
       subTitle: map['subTitle'],
       originalPrice: map['originalPrice'],

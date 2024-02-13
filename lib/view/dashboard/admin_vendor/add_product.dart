@@ -17,8 +17,6 @@ class AddProduct extends StatefulWidget {
 }
 
 class _AddProductState extends State<AddProduct> {
-  List<Uint8List>? fromPicker;
-
   final db = FirebaseFirestore.instance;
 
   @override
@@ -186,20 +184,22 @@ class _AddProductState extends State<AddProduct> {
                 firebaseProductProv.onHover = onHover;
               },
               onTap: () async {
-                fromPicker = await ImagePickerWeb.getMultiImagesAsBytes();
-                setState(() {});
+                firebaseProductProv.selectImage();
               },
               child: Container(
                 decoration: BoxDecoration(
-                    border: Border.all(color: MyAppColors.primaryred, width: 4),
+                    border: Border.all(
+                      color: MyAppColors.primaryred,
+                      width: 2,
+                    ),
                     borderRadius: BorderRadius.circular(8)),
-                width: 600,
+                width: MediaQuery.of(context).size.width / 3,
                 height: 300,
                 child: Container(
                   color: MyAppColors.darkBlue,
-                  child: fromPicker != null
+                  child:firebaseProductProv. fromPicker != null
                       ? Wrap(
-                          children: fromPicker!
+                          children: firebaseProductProv. fromPicker!
                               .map((e) => SizedBox(
                                   height: 240,
                                   width: 240,
@@ -229,8 +229,9 @@ class _AddProductState extends State<AddProduct> {
               MyAppColors.primaryred,
             ),
           ),
-          onPressed: () async {
-            firebaseProductProv.uploadListImages(fromPicker);
+          onPressed: () {
+            firebaseProductProv.uploadproduct();
+            firebaseProductProv.uploadListImages(firebaseProductProv. fromPicker);
             // final imageRef = storageRef.child('images/');
             // try {
             //   await imageRef.putData(

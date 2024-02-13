@@ -4,8 +4,16 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker_web/image_picker_web.dart';
+import 'package:zenify_admin_panel/models/product_model.dart';
 
 class FirebaseProductProvider with ChangeNotifier {
+  List<Uint8List>? fromPicker;
+  Future<void> selectImage() async {
+    fromPicker = await ImagePickerWeb.getMultiImagesAsBytes();
+    notifyListeners();
+  }
+
   //https://stackoverflow.com/questions/57559489/flutter-provider-in-initstate
   //why can i not call provider in init state
   //constructor of this class
@@ -83,7 +91,6 @@ class FirebaseProductProvider with ChangeNotifier {
     selectedSubCat = Subcategory;
     notifyListeners();
   }
-  //TODO: make logic to save sub categories
   // void selectCategoryItem(String category) {
   //   selectedCategory = category;
   //   notifyListeners();
@@ -137,7 +144,7 @@ class FirebaseProductProvider with ChangeNotifier {
     }
   }
 
-//hovering on image will show select image
+//hovering on image will show select image or no image selected
   bool _onHover = false;
 
   bool get onHover => _onHover;
@@ -149,7 +156,8 @@ class FirebaseProductProvider with ChangeNotifier {
 
   //tags customselect
   TextEditingController textEditingController = TextEditingController();
-
+//it will give suggestions based on the people entered in search bar
+  List<String> tagsSuggestions = [];
   List<String> returnSuggestions() {
     return tags
         .where((tag) => tag
@@ -158,6 +166,7 @@ class FirebaseProductProvider with ChangeNotifier {
         .toList();
   }
 
+//List of avalible tags
   List<String> tags = [
     "Tops",
     "Dresses",
@@ -194,4 +203,52 @@ class FirebaseProductProvider with ChangeNotifier {
   TextEditingController originalPriceController = TextEditingController();
   TextEditingController companyNameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+
+  void uploadproduct(BuildContext context) {
+    final ref = FirebaseFirestore.instance.collection('Products');
+    // String orgPrice= originalPriceController.text;
+
+    Product product = Product(
+        productId: ref.id,
+        productImages: downloadUrls,
+        tags: tags,
+        category: selectedCategory,
+        subCategories: selectedSubCat,
+        title: titleController.text,
+        subTitle: subtitleController.text,
+        originalPrice: int.tryParse(originalPriceController.text)!.toDouble(),
+        salePrice: 0,
+        companyName: companyNameController.text,
+        description: descriptionController.text);
+
+    //TODO:get doc id and store in the product
+    if (product.productId.isEmpty ||
+        product.productImages.isEmpty ||
+        product.tags.isEmpty ||
+        product.category.isEmpty ||
+        product.subCategories.isEmpty ||
+        product.title.isEmpty ||
+        product.subTitle.isEmpty ||
+        product.companyName.isEmpty ||
+        product.description.isEmpty) {
+      final snackbar = SnackBar(content: Text('Please fill all the fields'));
+      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+      return;
+    } else {
+      try {
+        ref.add(product.toMap()).then((value) => print(value.id));
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              e.toString(),
+            ),
+          ),
+        );
+      }
+    }
+
+    // Map<String, dynamic> mappedProduct = product.toMap();
+    // print(mappedProduct.toString());
+  }
 }
