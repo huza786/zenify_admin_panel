@@ -197,9 +197,9 @@ class _AddProductState extends State<AddProduct> {
                 height: 300,
                 child: Container(
                   color: MyAppColors.darkBlue,
-                  child:firebaseProductProv. fromPicker != null
+                  child: firebaseProductProv.fromPicker != null
                       ? Wrap(
-                          children: firebaseProductProv. fromPicker!
+                          children: firebaseProductProv.fromPicker!
                               .map((e) => SizedBox(
                                   height: 240,
                                   width: 240,
@@ -230,8 +230,9 @@ class _AddProductState extends State<AddProduct> {
             ),
           ),
           onPressed: () {
-            firebaseProductProv.uploadproduct();
-            firebaseProductProv.uploadListImages(firebaseProductProv. fromPicker);
+            firebaseProductProv.uploadproduct(context);
+            firebaseProductProv
+                .uploadListImages(firebaseProductProv.fromPicker);
             // final imageRef = storageRef.child('images/');
             // try {
             //   await imageRef.putData(

@@ -204,9 +204,16 @@ class FirebaseProductProvider with ChangeNotifier {
   TextEditingController companyNameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
-  void uploadproduct(BuildContext context) {
-    final ref = FirebaseFirestore.instance.collection('Products');
+  Future<void> uploadproduct(BuildContext context) async {
+    final ref = await FirebaseFirestore.instance.collection('Products');
     // String orgPrice= originalPriceController.text;
+    if (fromPicker == null) {
+      final snackbar = SnackBar(content: Text('Please select images'));
+      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+      return;
+    } else {
+      await uploadListImages(fromPicker);
+    }
 
     Product product = Product(
         productId: ref.id,
@@ -221,31 +228,71 @@ class FirebaseProductProvider with ChangeNotifier {
         companyName: companyNameController.text,
         description: descriptionController.text);
 
-    //TODO:get doc id and store in the product
-    if (product.productId.isEmpty ||
-        product.productImages.isEmpty ||
-        product.tags.isEmpty ||
-        product.category.isEmpty ||
-        product.subCategories.isEmpty ||
-        product.title.isEmpty ||
-        product.subTitle.isEmpty ||
-        product.companyName.isEmpty ||
-        product.description.isEmpty) {
-      final snackbar = SnackBar(content: Text('Please fill all the fields'));
+    if (product.productId.isEmpty) {
+      final snackbar = SnackBar(content: Text('Product ID is required'));
       ScaffoldMessenger.of(context).showSnackBar(snackbar);
       return;
-    } else {
-      try {
-        ref.add(product.toMap()).then((value) => print(value.id));
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              e.toString(),
-            ),
+    }
+
+    if (product.productImages.isEmpty) {
+      final snackbar = SnackBar(content: Text('Product image is required'));
+      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+      return;
+    }
+
+    if (product.tags.isEmpty) {
+      final snackbar = SnackBar(content: Text('Tags are required'));
+      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+      return;
+    }
+
+    if (product.category.isEmpty) {
+      final snackbar = SnackBar(content: Text('Category is required'));
+      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+      return;
+    }
+
+    if (product.subCategories.isEmpty) {
+      final snackbar = SnackBar(content: Text('Subcategories are required'));
+      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+      return;
+    }
+
+    if (product.title.isEmpty) {
+      final snackbar = SnackBar(content: Text('Title is required'));
+      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+      return;
+    }
+
+    if (product.subTitle.isEmpty) {
+      final snackbar = SnackBar(content: Text('Subtitle is required'));
+      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+      return;
+    }
+
+    if (product.companyName.isEmpty) {
+      final snackbar = SnackBar(content: Text('Company name is required'));
+      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+      return;
+    }
+
+    if (product.description.isEmpty) {
+      final snackbar = SnackBar(content: Text('Description is required'));
+      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+      return;
+    }
+
+// If all fields are filled, proceed with adding the product
+    try {
+      ref.add(product.toMap()).then((value) => print(value.id));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
           ),
-        );
-      }
+        ),
+      );
     }
 
     // Map<String, dynamic> mappedProduct = product.toMap();
