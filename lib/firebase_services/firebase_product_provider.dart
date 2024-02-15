@@ -15,7 +15,7 @@ class FirebaseProductProvider with ChangeNotifier {
   }
 
   //https://stackoverflow.com/questions/57559489/flutter-provider-in-initstate
-  //why can i not call provider in init state
+  //why can i not call provider in init state is solved by using its constructor
   //constructor of this class
   FirebaseProductProvider() {
     getCategory();
@@ -218,7 +218,7 @@ class FirebaseProductProvider with ChangeNotifier {
     Product product = Product(
         productId: ref.id,
         productImages: downloadUrls,
-        tags: tags,
+        tags: selectedTags as List<String>,
         category: selectedCategory,
         subCategories: selectedSubCat,
         title: titleController.text,

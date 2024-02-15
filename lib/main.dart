@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zenify_admin_panel/firebase_options.dart';
 import 'package:zenify_admin_panel/firebase_services/firebase_product_provider.dart';
+import 'package:zenify_admin_panel/models/product_model.dart';
 import 'package:zenify_admin_panel/view/dashboard/admin_vendor/admin_screen.dart';
 import 'package:zenify_admin_panel/view/dashboard/admin_vendor/components/navigation_rail_providers.dart';
 
@@ -19,6 +21,23 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        //stream provider provides data inside app at the root widget level
+        //and help to manage data easily through app
+        //the below code provides a list of products from  firebase using stream builder
+        StreamProvider<List<Product>>.value(
+            value: FirebaseFirestore.instance
+                .collection('Products')
+                .snapshots()
+                .map(
+                  (snapshot) => snapshot.docs
+                      .map(
+                        (doc) => Product.fromMap(
+                          doc.data(),
+                        ),
+                      )
+                      .toList(),
+                ),
+            initialData: const []),
         ChangeNotifierProvider(
           //navigation rail provider
           create: (context) => NavigationRailProvider(),
