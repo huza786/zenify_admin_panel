@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:zenify_admin_panel/main.dart';
 import 'package:zenify_admin_panel/view/dashboard/admin_vendor/add_product.dart';
 import 'package:zenify_admin_panel/view/dashboard/admin_vendor/components/navigation_rail_providers.dart';
+import 'package:zenify_admin_panel/view/dashboard/admin_vendor/edit_product.dart';
 
 class CustomNavigationRail extends StatefulWidget {
   const CustomNavigationRail({super.key});
@@ -47,32 +48,21 @@ class _CustomNavigationRailState extends State<CustomNavigationRail> {
           },
           // labelType: NavigationRailLabelType.all,
         ),
-        Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                if (navRailProv.selectedIndex == 0)
-                  //Add a product Screen
-                  AddProduct()
-                else if (navRailProv.selectedIndex == 1)
-                  Text(
-                    'Edit Products',
-                    style: TextStyle(fontSize: 55),
-                  )
-                else if (navRailProv.selectedIndex == 2)
-                  Text(
-                    'View all Product',
-                    style: TextStyle(fontSize: 55),
-                  )
-                else if (navRailProv.selectedIndex == 3)
-                  Text(
-                    'Sale and Profits',
-                    style: TextStyle(fontSize: 55),
-                  ),
-              ],
-            ),
-          ),
-        )
+        if (navRailProv.selectedIndex == 0)
+          //Add a product Screen
+          AddProduct()
+        else if (navRailProv.selectedIndex == 1)
+          EditProductPage()
+        else if (navRailProv.selectedIndex == 2)
+          Text(
+            'View all Product',
+            style: TextStyle(fontSize: 55),
+          )
+        else if (navRailProv.selectedIndex == 3)
+          Text(
+            'Sale and Profits',
+            style: TextStyle(fontSize: 55),
+          )
       ],
     );
   }

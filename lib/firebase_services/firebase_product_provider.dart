@@ -178,7 +178,7 @@ class FirebaseProductProvider with ChangeNotifier {
     "Accessories",
     "Footwear",
   ];
-  List selectedTags = [];
+  List<String> selectedTags = [];
   addSelectedtag(String tag) {
     selectedTags.add(tag);
     notifyListeners();
@@ -206,6 +206,7 @@ class FirebaseProductProvider with ChangeNotifier {
 
   Future<void> uploadproduct(BuildContext context) async {
     final ref = await FirebaseFirestore.instance.collection('Products');
+    final doc = ref.doc();
     // String orgPrice= originalPriceController.text;
     if (fromPicker == null) {
       final snackbar = SnackBar(content: Text('Please select images'));
@@ -216,9 +217,9 @@ class FirebaseProductProvider with ChangeNotifier {
     }
 
     Product product = Product(
-        productId: ref.id,
+        productId: doc.id,
         productImages: downloadUrls,
-        tags: selectedTags as List<String>,
+        tags: selectedTags,
         category: selectedCategory,
         subCategories: selectedSubCat,
         title: titleController.text,

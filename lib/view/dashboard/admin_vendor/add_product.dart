@@ -22,240 +22,249 @@ class _AddProductState extends State<AddProduct> {
   @override
   Widget build(BuildContext context) {
     final firebaseProductProv = Provider.of<FirebaseProductProvider>(context);
-    return Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-      const Text(
-        "Add New Product",
-        style: TextStyle(fontSize: 40, fontWeight: FontWeight.w600),
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+          const Text(
+            "Add New Product",
+            style: TextStyle(fontSize: 40, fontWeight: FontWeight.w600),
+          ),
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  //title
-                  CustomTextForm(
-                      hint: 'Title',
-                      controller: firebaseProductProv.titleController),
-                  //Subtitle
-                  CustomTextForm(
-                      hint: 'Subtitle',
-                      controller: firebaseProductProv.subtitleController),
-                ],
-              ),
-              Row(
-                children: [
-                  //selected category dropdown
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5.0),
-                        border: Border.all(
-                          width: 1.0,
-                          color: MyAppColors
-                              .primaryred, // Customize border color as needed
-                        ),
-                      ),
-                      height: 60,
-                      width: 138,
-                      child: Center(
-                        child: DropdownButtonFormField(
-                          decoration: const InputDecoration(
-                            hintText:
-                                '', // Set empty hintText to hide default text in dropdown
-                            border: InputBorder.none, // Remove default border
-                            contentPadding:
-                                EdgeInsets.zero, // Adjust content padding
-                            isDense:
-                                true, // Reduce the height of the input field
-                            alignLabelWithHint:
-                                true, // Align the label with the hint text
-                          ),
-                          value: firebaseProductProv.selectedCategory,
-                          items: firebaseProductProv.categoryList
-                              .map(
-                                (size) => DropdownMenuItem<String>(
-                                  value: size,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 4, bottom: 4),
-                                    child: Text(
-                                      size,
-                                      style: const TextStyle(fontSize: 14),
-                                    ),
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                          onChanged: (size) {
-                            firebaseProductProv
-                                .selectCategoryItem(size.toString());
-                            firebaseProductProv
-                                .getSubcategoriesForCategory(size!);
-                          },
-                        ),
-                      ),
-                    ),
+                  Row(
+                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      //title
+                      CustomTextForm(
+                          hint: 'Title',
+                          controller: firebaseProductProv.titleController),
+                      //Subtitle
+                      CustomTextForm(
+                          hint: 'Subtitle',
+                          controller: firebaseProductProv.subtitleController),
+                    ],
                   ),
-                  //Selected Subcategory dropdown
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5.0),
-                        border: Border.all(
-                          width: 1.0,
-                          color: MyAppColors
-                              .primaryred, // Customize border color as needed
-                        ),
-                      ),
-                      height: 60,
-                      width: 138,
-                      child: Center(
-                        child: DropdownButtonFormField(
-                          decoration: const InputDecoration(
-                            hintText:
-                                'Sub Category', // Set empty hintText to hide default text in dropdown
-                            border: InputBorder.none, // Remove default border
-                            contentPadding:
-                                EdgeInsets.zero, // Adjust content padding
-                            isDense:
-                                true, // Reduce the height of the input field
-                            alignLabelWithHint:
-                                true, // Align the label with the hint text
+                  Row(
+                    children: [
+                      //selected category dropdown
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5.0),
+                            border: Border.all(
+                              width: 1.0,
+                              color: MyAppColors
+                                  .primaryred, // Customize border color as needed
+                            ),
                           ),
-                          value: firebaseProductProv.selectedSubCat,
-                          items: firebaseProductProv.availibleSubCategory
-                              .map(
-                                (size) => DropdownMenuItem<String>(
-                                  value: size,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 4, bottom: 4),
-                                    child: Text(
-                                      size,
-                                      style: const TextStyle(fontSize: 14),
+                          height: 60,
+                          width: 138,
+                          child: Center(
+                            child: DropdownButtonFormField(
+                              decoration: const InputDecoration(
+                                hintText:
+                                    '', // Set empty hintText to hide default text in dropdown
+                                border:
+                                    InputBorder.none, // Remove default border
+                                contentPadding:
+                                    EdgeInsets.zero, // Adjust content padding
+                                isDense:
+                                    true, // Reduce the height of the input field
+                                alignLabelWithHint:
+                                    true, // Align the label with the hint text
+                              ),
+                              value: firebaseProductProv.selectedCategory,
+                              items: firebaseProductProv.categoryList
+                                  .map(
+                                    (size) => DropdownMenuItem<String>(
+                                      value: size,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 4, bottom: 4),
+                                        child: Text(
+                                          size,
+                                          style: const TextStyle(fontSize: 14),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                          onChanged: (size) {
-                            firebaseProductProv
-                                .selectSubCategoryItem(size.toString());
-                          },
+                                  )
+                                  .toList(),
+                              onChanged: (size) {
+                                firebaseProductProv
+                                    .selectCategoryItem(size.toString());
+                                firebaseProductProv
+                                    .getSubcategoriesForCategory(size!);
+                              },
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      //Selected Subcategory dropdown
+                      Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5.0),
+                            border: Border.all(
+                              width: 1.0,
+                              color: MyAppColors
+                                  .primaryred, // Customize border color as needed
+                            ),
+                          ),
+                          height: 60,
+                          width: 138,
+                          child: Center(
+                            child: DropdownButtonFormField(
+                              decoration: const InputDecoration(
+                                hintText:
+                                    'Sub Category', // Set empty hintText to hide default text in dropdown
+                                border:
+                                    InputBorder.none, // Remove default border
+                                contentPadding:
+                                    EdgeInsets.zero, // Adjust content padding
+                                isDense:
+                                    true, // Reduce the height of the input field
+                                alignLabelWithHint:
+                                    true, // Align the label with the hint text
+                              ),
+                              value: firebaseProductProv.selectedSubCat,
+                              items: firebaseProductProv.availibleSubCategory
+                                  .map(
+                                    (size) => DropdownMenuItem<String>(
+                                      value: size,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 4, bottom: 4),
+                                        child: Text(
+                                          size,
+                                          style: const TextStyle(fontSize: 14),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                              onChanged: (size) {
+                                firebaseProductProv
+                                    .selectSubCategoryItem(size.toString());
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                      //Price
+                      CustomTextForm(
+                          hint: 'Price',
+                          controller:
+                              firebaseProductProv.originalPriceController),
+                    ],
                   ),
-                  //Price
-                  CustomTextForm(
-                      hint: 'Price',
-                      controller: firebaseProductProv.originalPriceController),
-                ],
-              ),
-              //Description field
-              Row(
-                children: [
-                  //description
-                  CustomTextForm(
-                      hint: 'Description',
-                      controller: firebaseProductProv.descriptionController),
+                  //Description field
+                  Row(
+                    children: [
+                      //description
+                      CustomTextForm(
+                          hint: 'Description',
+                          controller:
+                              firebaseProductProv.descriptionController),
 
-                  //companyname
-                  CustomTextForm(
-                      hint: 'companyname',
-                      controller: firebaseProductProv.companyNameController),
+                      //companyname
+                      CustomTextForm(
+                          hint: 'companyname',
+                          controller:
+                              firebaseProductProv.companyNameController),
+                    ],
+                  ),
+                  //Tags widget
+                  TextFieldTagsCustom(),
                 ],
               ),
-              //Tags widget
-              TextFieldTagsCustom(),
+              //Image Picker/Select
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  onHover: (onHover) {
+                    firebaseProductProv.onHover = onHover;
+                  },
+                  onTap: () async {
+                    firebaseProductProv.selectImage();
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: MyAppColors.primaryred,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8)),
+                    width: MediaQuery.of(context).size.width / 3,
+                    height: 300,
+                    child: Container(
+                      color: MyAppColors.darkBlue,
+                      child: firebaseProductProv.fromPicker != null
+                          ? Wrap(
+                              children: firebaseProductProv.fromPicker!
+                                  .map((e) => SizedBox(
+                                      height: 240,
+                                      width: 240,
+                                      child: Image.memory(e)))
+                                  .toList(),
+                            )
+                          : Center(
+                              child: Text(
+                              firebaseProductProv.onHover
+                                  ? "Select Image"
+                                  : "No image selected",
+                              style: const TextStyle(fontSize: 24),
+                            )),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
-          //Image Picker/Select
+
+          //Upload Product button
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: InkWell(
-              onHover: (onHover) {
-                firebaseProductProv.onHover = onHover;
+            child: ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                  MyAppColors.primaryred,
+                ),
+              ),
+              onPressed: () {
+                firebaseProductProv.uploadproduct(context);
+                firebaseProductProv
+                    .uploadListImages(firebaseProductProv.fromPicker);
+                // final imageRef = storageRef.child('images/');
+                // try {
+                //   await imageRef.putData(
+                //     Uint8List.fromList(fromPicker!),
+                //     SettableMetadata(contentType: 'image/jpeg'),
+                //   );
+                //   final url = await imageRef.getDownloadURL();
+                //   print(url.toString());
+                // } catch (e) {
+                //   print(e);
+                // }
               },
-              onTap: () async {
-                firebaseProductProv.selectImage();
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: MyAppColors.primaryred,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(8)),
-                width: MediaQuery.of(context).size.width / 3,
-                height: 300,
-                child: Container(
-                  color: MyAppColors.darkBlue,
-                  child: firebaseProductProv.fromPicker != null
-                      ? Wrap(
-                          children: firebaseProductProv.fromPicker!
-                              .map((e) => SizedBox(
-                                  height: 240,
-                                  width: 240,
-                                  child: Image.memory(e)))
-                              .toList(),
-                        )
-                      : Center(
-                          child: Text(
-                          firebaseProductProv.onHover
-                              ? "Select Image"
-                              : "No image selected",
-                          style: const TextStyle(fontSize: 24),
-                        )),
+              child: const Text(
+                'Upload Product',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
                 ),
               ),
             ),
           ),
-        ],
+        ]),
       ),
-
-      //Upload Product button
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(
-              MyAppColors.primaryred,
-            ),
-          ),
-          onPressed: () {
-            firebaseProductProv.uploadproduct(context);
-            firebaseProductProv
-                .uploadListImages(firebaseProductProv.fromPicker);
-            // final imageRef = storageRef.child('images/');
-            // try {
-            //   await imageRef.putData(
-            //     Uint8List.fromList(fromPicker!),
-            //     SettableMetadata(contentType: 'image/jpeg'),
-            //   );
-            //   final url = await imageRef.getDownloadURL();
-            //   print(url.toString());
-            // } catch (e) {
-            //   print(e);
-            // }
-          },
-          child: const Text(
-            'Upload Product',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ),
-    ]);
+    );
   }
 }
 
