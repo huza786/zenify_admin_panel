@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zenify_admin_panel/main.dart';
 import 'package:zenify_admin_panel/models/product_model.dart';
 
 import 'dart:async';
@@ -82,16 +83,53 @@ class _EditProductPageState extends State<EditProductPage> {
                   final product = productList[index];
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      height: 35,
-                      width: 250,
-                      child: ListTile(
-                        title: Text(product.productId),
-                        subtitle: Text(product.subTitle),
-
-                        // Display more product details as needed
-                      ),
-                    ),
+                    child: Container(
+                        height: 300,
+                        width: 500,
+                        decoration: BoxDecoration(
+                            color: MyAppColors.darkBlue,
+                            borderRadius: BorderRadius.circular(16)),
+                        child: Stack(
+                          children: [
+                            Positioned(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16)),
+                                height: 180,
+                                width: 300,
+                                child: Image.network(
+                                  product.productImages[0],
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top: 190,
+                              left: 10,
+                              child: Text(
+                                product.title,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top: 210,
+                              left: 10,
+                              child: Text(
+                                product.subTitle,
+                              ),
+                            ),
+                            Positioned(
+                              top: 190,
+                              left: 190,
+                              child: Text(
+                                "${product.originalPrice.toString()}\$",
+                              ),
+                            )
+                          ],
+                        )),
                   );
                 },
               ),
