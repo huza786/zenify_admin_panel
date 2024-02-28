@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 
@@ -14,6 +15,28 @@ class FirebaseProductProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  TextEditingController salepriceController = TextEditingController();
+  //this function will allow you to get all info of selected product in
+  ////product card so that vendor can modify it  later on
+  void initModificationProcess(Product product) {
+    titleController.text = product.title;
+    descriptionController.text = product.description;
+    subtitleController.text = product.subTitle;
+    // selectedCategory = product.category;
+    // // await getSubcategoriesForCategory(selectedCategory);
+    // selectedSubCat = product.subCategories;
+    originalPriceController.text = product.originalPrice.toString();
+    if (product.salePrice != 0) {
+      salepriceController.text = product.salePrice.toString();
+    }
+    companyNameController.text = product.companyName;
+    selectedTags = [];
+    selectedTags.addAll(product.tags);
+    downloadUrls = [];
+    downloadUrls.addAll(product.productImages);
+    //TODO:show selected pics
+  }
+
   //https://stackoverflow.com/questions/57559489/flutter-provider-in-initstate
   //why can i not call provider in init state is solved by using its constructor
   //constructor of this class
@@ -21,6 +44,11 @@ class FirebaseProductProvider with ChangeNotifier {
     getCategory();
   }
   List<String> downloadUrls = [];
+  void removedownloadURL(String downloadurl) {
+    downloadUrls.remove(downloadurl);
+    notifyListeners();
+  }
+
   final List<String> _categoryList = [];
   List<String> get categoryList => _categoryList;
 
@@ -50,6 +78,7 @@ class FirebaseProductProvider with ChangeNotifier {
   List<String> availibleSubCategory = [];
   // Method to get subcategories for a category
   Future<List<String>> getSubcategoriesForCategory(String categoryName) async {
+    availibleSubCategory = [];
     try {
       final categoryRef =
           FirebaseFirestore.instance.collection('utils').doc(categoryName);
@@ -83,6 +112,7 @@ class FirebaseProductProvider with ChangeNotifier {
   String selectedCategory = 'Category';
   void selectCategoryItem(String category) {
     selectedCategory = category;
+    // getSubcategoriesForCategory(category);
     notifyListeners();
   }
 
@@ -131,6 +161,7 @@ class FirebaseProductProvider with ChangeNotifier {
         );
       }
       url = await storageRef.getDownloadURL();
+
       downloadUrls.add(url);
     } catch (e) {
       print(e);

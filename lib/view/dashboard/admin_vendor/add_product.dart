@@ -37,10 +37,12 @@ class _AddProductState extends State<AddProduct> {
                     children: [
                       //title
                       CustomTextForm(
+                          isNumberKeyboard: false,
                           hint: 'Title',
                           controller: firebaseProductProv.titleController),
                       //Subtitle
                       CustomTextForm(
+                          isNumberKeyboard: false,
                           hint: 'Subtitle',
                           controller: firebaseProductProv.subtitleController),
                     ],
@@ -155,6 +157,7 @@ class _AddProductState extends State<AddProduct> {
                       ),
                       //Price
                       CustomTextForm(
+                          isNumberKeyboard: true,
                           hint: 'Price',
                           controller:
                               firebaseProductProv.originalPriceController),
@@ -165,12 +168,14 @@ class _AddProductState extends State<AddProduct> {
                     children: [
                       //description
                       CustomTextForm(
+                          isNumberKeyboard: false,
                           hint: 'Description',
                           controller:
                               firebaseProductProv.descriptionController),
 
                       //companyname
                       CustomTextForm(
+                          isNumberKeyboard: false,
                           hint: 'companyname',
                           controller:
                               firebaseProductProv.companyNameController),

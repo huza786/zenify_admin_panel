@@ -5,6 +5,8 @@ import 'package:zenify_admin_panel/models/product_model.dart';
 
 import 'dart:async';
 
+import 'package:zenify_admin_panel/utils/app_routes.dart';
+
 class EditProductPage extends StatefulWidget {
   const EditProductPage({Key? key}) : super(key: key);
 
@@ -87,7 +89,11 @@ class _EditProductPageState extends State<EditProductPage> {
                     padding: const EdgeInsets.all(8.0),
                     child: GestureDetector(
                       onTap: () {
-                        //TODO:add a button so that the vendor can edit or delete the product
+                        //Heading the product to a card where
+                        // the vendor can incorporate the changes
+                        //in the product and then publish it
+                        Navigator.pushNamed(context, AppRoutes.modifyProduct,
+                            arguments: product);
                       },
                       child: Container(
                           height: 300,

@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:zenify_admin_panel/main.dart';
 
 class CustomTextForm extends StatelessWidget {
   final String hint;
   final TextEditingController controller;
+  final bool isNumberKeyboard;
   const CustomTextForm(
-      {super.key, required this.controller, required this.hint});
+      {super.key,
+      required this.controller,
+      required this.hint,
+      required this.isNumberKeyboard});
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +26,19 @@ class CustomTextForm extends StatelessWidget {
         ),
         width: MediaQuery.of(context).size.width / 5,
         child: TextFormField(
+          keyboardType: TextInputType.number,
           style: const TextStyle(),
           controller: controller,
           decoration: InputDecoration(
+            labelText: hint,
             border: const OutlineInputBorder(borderSide: BorderSide.none),
             hintText: hint,
           ),
+          inputFormatters: [
+            isNumberKeyboard
+                ? FilteringTextInputFormatter.allow(RegExp("[0-9]"))
+                : FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z ]"))
+          ],
         ),
       ),
     );
