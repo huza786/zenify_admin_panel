@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:zenify_admin_panel/models/product_model.dart';
 
 class NavigationRailProvider with ChangeNotifier {

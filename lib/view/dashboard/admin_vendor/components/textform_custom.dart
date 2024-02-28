@@ -21,10 +21,10 @@ class CustomTextForm extends StatelessWidget {
         ),
         width: MediaQuery.of(context).size.width / 5,
         child: TextFormField(
-          style: TextStyle(),
+          style: const TextStyle(),
           controller: controller,
           decoration: InputDecoration(
-            border: OutlineInputBorder(borderSide: BorderSide.none),
+            border: const OutlineInputBorder(borderSide: BorderSide.none),
             hintText: hint,
           ),
         ),

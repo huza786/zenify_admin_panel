@@ -209,7 +209,7 @@ class FirebaseProductProvider with ChangeNotifier {
     final doc = ref.doc();
     // String orgPrice= originalPriceController.text;
     if (fromPicker == null) {
-      final snackbar = SnackBar(content: Text('Please select images'));
+      const snackbar = SnackBar(content: Text('Please select images'));
       ScaffoldMessenger.of(context).showSnackBar(snackbar);
       return;
     } else {
@@ -230,55 +230,55 @@ class FirebaseProductProvider with ChangeNotifier {
         description: descriptionController.text);
 
     if (product.productId.isEmpty) {
-      final snackbar = SnackBar(content: Text('Product ID is required'));
+      const snackbar = SnackBar(content: Text('Product ID is required'));
       ScaffoldMessenger.of(context).showSnackBar(snackbar);
       return;
     }
 
     if (product.productImages.isEmpty) {
-      final snackbar = SnackBar(content: Text('Product image is required'));
+      const snackbar = SnackBar(content: Text('Product image is required'));
       ScaffoldMessenger.of(context).showSnackBar(snackbar);
       return;
     }
 
     if (product.tags.isEmpty) {
-      final snackbar = SnackBar(content: Text('Tags are required'));
+      const snackbar = SnackBar(content: Text('Tags are required'));
       ScaffoldMessenger.of(context).showSnackBar(snackbar);
       return;
     }
 
     if (product.category.isEmpty) {
-      final snackbar = SnackBar(content: Text('Category is required'));
+      const snackbar = SnackBar(content: Text('Category is required'));
       ScaffoldMessenger.of(context).showSnackBar(snackbar);
       return;
     }
 
     if (product.subCategories.isEmpty) {
-      final snackbar = SnackBar(content: Text('Subcategories are required'));
+      const snackbar = SnackBar(content: Text('Subcategories are required'));
       ScaffoldMessenger.of(context).showSnackBar(snackbar);
       return;
     }
 
     if (product.title.isEmpty) {
-      final snackbar = SnackBar(content: Text('Title is required'));
+      const snackbar = SnackBar(content: Text('Title is required'));
       ScaffoldMessenger.of(context).showSnackBar(snackbar);
       return;
     }
 
     if (product.subTitle.isEmpty) {
-      final snackbar = SnackBar(content: Text('Subtitle is required'));
+      const snackbar = SnackBar(content: Text('Subtitle is required'));
       ScaffoldMessenger.of(context).showSnackBar(snackbar);
       return;
     }
 
     if (product.companyName.isEmpty) {
-      final snackbar = SnackBar(content: Text('Company name is required'));
+      const snackbar = SnackBar(content: Text('Company name is required'));
       ScaffoldMessenger.of(context).showSnackBar(snackbar);
       return;
     }
 
     if (product.description.isEmpty) {
-      final snackbar = SnackBar(content: Text('Description is required'));
+      const snackbar = SnackBar(content: Text('Description is required'));
       ScaffoldMessenger.of(context).showSnackBar(snackbar);
       return;
     }

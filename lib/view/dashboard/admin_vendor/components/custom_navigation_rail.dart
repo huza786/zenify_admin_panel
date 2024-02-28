@@ -50,16 +50,16 @@ class _CustomNavigationRailState extends State<CustomNavigationRail> {
         ),
         if (navRailProv.selectedIndex == 0)
           //Add a product Screen
-          AddProduct()
+          const AddProduct()
         else if (navRailProv.selectedIndex == 1)
-          EditProductPage()
+          const EditProductPage()
         else if (navRailProv.selectedIndex == 2)
-          Text(
+          const Text(
             'View all Product',
-            style: TextStyle(fontSize: 55),
+            style: const TextStyle(fontSize: 55),
           )
         else if (navRailProv.selectedIndex == 3)
-          Text(
+          const Text(
             'Sale and Profits',
             style: TextStyle(fontSize: 55),
           )

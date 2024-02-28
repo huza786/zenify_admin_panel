@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -6,6 +5,7 @@ import 'package:zenify_admin_panel/firebase_options.dart';
 import 'package:zenify_admin_panel/firebase_services/firebase_product_provider.dart';
 import 'package:zenify_admin_panel/firebase_services/stream_services/stream_services.dart';
 import 'package:zenify_admin_panel/models/product_model.dart';
+import 'package:zenify_admin_panel/utils/app_routes.dart';
 import 'package:zenify_admin_panel/view/dashboard/admin_vendor/admin_screen.dart';
 import 'package:zenify_admin_panel/view/dashboard/admin_vendor/components/navigation_rail_providers.dart';
 
@@ -38,30 +38,31 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-          theme: ThemeData(
-            navigationRailTheme: NavigationRailThemeData(
-                backgroundColor: MyAppColors.darkBlue,
-                selectedIconTheme:
-                    IconThemeData(color: MyAppColors.primaryred)),
-            drawerTheme: const DrawerThemeData(
-              backgroundColor: MyAppColors.primaryred,
-            ),
-            appBarTheme: const AppBarTheme(
-              backgroundColor: MyAppColors.primaryred,
-              titleTextStyle: TextStyle(
-                color: Colors.white,
-                fontFamily: 'Metropolis',
-                fontSize: 34,
-                fontWeight: FontWeight.w800,
-              ),
-              centerTitle: true,
-            ),
-            fontFamily: 'Metropolis',
-            primaryColor: MyAppColors.primaryred,
-            brightness: Brightness.dark,
+        theme: ThemeData(
+          navigationRailTheme: const NavigationRailThemeData(
+              backgroundColor: MyAppColors.darkBlue,
+              selectedIconTheme: IconThemeData(color: MyAppColors.primaryred)),
+          drawerTheme: const DrawerThemeData(
+            backgroundColor: MyAppColors.primaryred,
           ),
-          debugShowCheckedModeBanner: false,
-          home: const AdminScreen()),
+          appBarTheme: const AppBarTheme(
+            backgroundColor: MyAppColors.primaryred,
+            titleTextStyle: TextStyle(
+              color: Colors.white,
+              fontFamily: 'Metropolis',
+              fontSize: 34,
+              fontWeight: FontWeight.w800,
+            ),
+            centerTitle: true,
+          ),
+          fontFamily: 'Metropolis',
+          primaryColor: MyAppColors.primaryred,
+          brightness: Brightness.dark,
+        ),
+        debugShowCheckedModeBanner: false,
+        initialRoute: AppRoutes.initialRoute,
+        routes: routes,
+      ),
     );
   }
 }

@@ -1,8 +1,5 @@
-import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker_web/image_picker_web.dart';
 import 'package:provider/provider.dart';
 import 'package:zenify_admin_panel/firebase_services/firebase_product_provider.dart';
 import 'package:zenify_admin_panel/main.dart';
