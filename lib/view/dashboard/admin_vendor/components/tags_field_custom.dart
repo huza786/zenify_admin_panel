@@ -51,6 +51,8 @@ class _TextFieldTagsCustomState extends State<TextFieldTagsCustom> {
                         child: Chip(
                           onDeleted: () {
                             firebaseProductProv.removeSelectedtag(tag);
+                            print("deleted tag:$tag");
+                            print(firebaseProductProv.selectedTags);
                           },
                           deleteIconColor: MyAppColors.primaryred,
                           deleteIcon: const Icon(
@@ -82,6 +84,9 @@ class _TextFieldTagsCustomState extends State<TextFieldTagsCustom> {
                               onTap: () {
                                 //Search bar below
                                 firebaseProductProv.addSelectedtag(tag);
+                                print("added tag:$tag");
+                                print(firebaseProductProv.selectedTags);
+
                                 firebaseProductProv.clearSearchBar();
                               },
                               child: Padding(

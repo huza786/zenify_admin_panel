@@ -9,13 +9,18 @@ import 'package:image_picker_web/image_picker_web.dart';
 import 'package:zenify_admin_panel/models/product_model.dart';
 
 class FirebaseProductProvider with ChangeNotifier {
+  TextEditingController titleController = TextEditingController();
+  TextEditingController subtitleController = TextEditingController();
+  TextEditingController originalPriceController = TextEditingController();
+  TextEditingController companyNameController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  TextEditingController salepriceController = TextEditingController();
   List<Uint8List>? fromPicker;
   Future<void> selectImage() async {
     fromPicker = await ImagePickerWeb.getMultiImagesAsBytes();
     notifyListeners();
   }
 
-  TextEditingController salepriceController = TextEditingController();
   //this function will allow you to get all info of selected product in
   ////product card so that vendor can modify it  later on
   void initModificationProcess(Product product) {
@@ -30,9 +35,9 @@ class FirebaseProductProvider with ChangeNotifier {
       salepriceController.text = product.salePrice.toString();
     }
     companyNameController.text = product.companyName;
-    selectedTags = [];
+    selectedTags.clear();
     selectedTags.addAll(product.tags);
-    downloadUrls = [];
+    downloadUrls.clear();
     downloadUrls.addAll(product.productImages);
     //TODO:show selected pics
   }
@@ -228,12 +233,6 @@ class FirebaseProductProvider with ChangeNotifier {
   changed() {
     notifyListeners();
   }
-
-  TextEditingController titleController = TextEditingController();
-  TextEditingController subtitleController = TextEditingController();
-  TextEditingController originalPriceController = TextEditingController();
-  TextEditingController companyNameController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
 
   Future<void> uploadproduct(BuildContext context) async {
     final ref = await FirebaseFirestore.instance.collection('Products');

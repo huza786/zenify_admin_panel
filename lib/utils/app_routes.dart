@@ -11,5 +11,5 @@ class AppRoutes {
 var routes = {
   AppRoutes.initialRoute: (context) => const AdminScreen(),
   AppRoutes.editScreen: (context) => const EditProductPage(),
-  AppRoutes.modifyProduct: (context) => const ModifyProducts(),
+  // AppRoutes.modifyProduct: (context) => const ModifyProducts(),
 };

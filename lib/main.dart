@@ -7,6 +7,7 @@ import 'package:zenify_admin_panel/firebase_services/stream_services/stream_serv
 import 'package:zenify_admin_panel/models/product_model.dart';
 import 'package:zenify_admin_panel/utils/app_routes.dart';
 import 'package:zenify_admin_panel/view/dashboard/admin_vendor/admin_screen.dart';
+import 'package:zenify_admin_panel/view/dashboard/admin_vendor/components/modifyProduct.dart';
 import 'package:zenify_admin_panel/view/dashboard/admin_vendor/components/navigation_rail_providers.dart';
 
 Future<void> main() async {
@@ -20,14 +21,12 @@ class MyApp extends StatelessWidget {
 // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    ProductStream stream = ProductStream();
     return MultiProvider(
       providers: [
         //stream provider provides data inside app at the root widget level
         //and help to manage data easily through app
         //the below code provides a list of products from  firebase using stream builder
-        StreamProvider<List<Product>>.value(
-            value: stream.stream, initialData: const []),
+
         ChangeNotifierProvider(
           //navigation rail provider
           create: (context) => NavigationRailProvider(),
@@ -62,6 +61,12 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         initialRoute: AppRoutes.initialRoute,
         routes: routes,
+        onGenerateRoute: (settings) {
+          if (settings.name == AppRoutes.modifyProduct) {
+            final id = settings.arguments as String;
+            return MaterialPageRoute(builder: (_) => ModifyProducts(id: id));
+          }
+        },
       ),
     );
   }
