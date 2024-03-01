@@ -17,6 +17,7 @@ class ProductStream {
     return stream;
   }
 
+  ///this below code will help to fetch product fromfirebase and it checks the id parameter in product model instead of firebase doc id
   Stream<Product> singleStream(id) {
     final db = FirebaseFirestore.instance.collection('Products');
     final stream = db

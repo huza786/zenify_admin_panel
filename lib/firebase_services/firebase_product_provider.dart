@@ -18,6 +18,8 @@ class FirebaseProductProvider with ChangeNotifier {
   List<Uint8List>? fromPicker;
   Future<void> selectImage() async {
     fromPicker = await ImagePickerWeb.getMultiImagesAsBytes();
+    // ignore: avoid_print
+    print(fromPicker!.length.toString());
     notifyListeners();
   }
 
@@ -174,8 +176,13 @@ class FirebaseProductProvider with ChangeNotifier {
   }
 
   Future<void> uploadListImages(List<Uint8List>? imagesList) async {
-    if (imagesList != null) {
-      await Future.wait(imagesList.map((_image) => uploadSingleImage(_image)));
+    if (imagesList!.isNotEmpty) {
+      // Use asMap to iterate over the list with indices
+      await Future.wait(imagesList
+          .asMap()
+          .entries
+          .skip(1)
+          .map((entry) => uploadSingleImage(entry.value)));
       print(downloadUrls.toString());
     }
   }
@@ -236,7 +243,7 @@ class FirebaseProductProvider with ChangeNotifier {
 
   Future<void> uploadproduct(BuildContext context) async {
     final ref = await FirebaseFirestore.instance.collection('Products');
-    final doc = ref.doc();
+    String docId = ref.doc().id;
     // String orgPrice= originalPriceController.text;
     if (fromPicker == null) {
       const snackbar = SnackBar(content: Text('Please select images'));
@@ -247,7 +254,7 @@ class FirebaseProductProvider with ChangeNotifier {
     }
 
     Product product = Product(
-        productId: doc.id,
+        productId: docId,
         productImages: downloadUrls,
         tags: selectedTags,
         category: selectedCategory,
@@ -312,10 +319,10 @@ class FirebaseProductProvider with ChangeNotifier {
       ScaffoldMessenger.of(context).showSnackBar(snackbar);
       return;
     }
-
+//https://stackoverflow.com/questions/74664205/anyway-to-save-doc-id-as-a-string-in-firebase-for-specific-user
 // If all fields are filled, proceed with adding the product
     try {
-      ref.add(product.toMap()).then((value) => print(value.id));
+      ref.doc(docId).set(product.toMap());
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
